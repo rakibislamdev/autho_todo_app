@@ -18,6 +18,7 @@ return new class extends Migration
             $table->String('date');
             $table->string('name');
             $table->string('details');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('complete')->default(false);
             $table->timestamps();
         });

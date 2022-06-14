@@ -14,11 +14,18 @@ use App\Http\Controllers\TodoController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
 
-Route::get('/', [TodoController::class, 'index']);
+
+Route::get('/', [TodoController::class, 'index'])->middleware('auth');
 
 Route::get('/store', [TodoController::class, 'store']);
 
@@ -29,13 +36,3 @@ Route::get('/update/{todo}', [TodoController::class, 'update']);
 Route::get('/delete/{todo}', [TodoController::class, 'destroy']);
 
 Route::get('/status', [TodoController::class, 'status']);
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});

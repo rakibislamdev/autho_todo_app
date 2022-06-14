@@ -14,7 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return \view('index')->with('todos', Todo::all());
+        return \view('todo.index')->with('todos', Todo::all());
     }
 
     /**
@@ -25,19 +25,10 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        Todo::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = \auth()->user()->id;
+        Todo::create($data);
         return \redirect('/');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Todo  $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Todo $todo)
-    {
-        //
     }
 
     /**
@@ -48,7 +39,7 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        return view('edit', ['todo' => $todo]);
+        return view('todo.edit', ['todo' => $todo]);
     }
 
     /**
