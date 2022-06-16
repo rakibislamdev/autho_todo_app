@@ -14,7 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return \view('todo.index')->with('todos', Todo::all());
+        return \view('todo.index')->with('todos', \auth()->user()->todos);
     }
 
     /**
