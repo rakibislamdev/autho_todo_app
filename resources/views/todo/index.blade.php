@@ -46,7 +46,8 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/store">
+                            <form action="/store" method="POST">
+                                @csrf
                                 <div class="mb-3">
                                     <label for="date" class="form-label">Date:</label>
                                     <input type="date" name="date" class="form-control" id="date"
@@ -69,14 +70,15 @@
                 </div>
             </div>
         </div>
-        <form action="/status">
+        {{-- <form action="/status"> --}}
             <table class="table table-bordered border-primary">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">User Name</th>
                         <th scope="col">Work</th>
                         <th scope="col">Work Detealis</th>
-                        <th scope="col">Date</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -86,11 +88,13 @@
                         <th scope="row"><input class="form-check-input" type="checkbox" name="status[{{ $todo->id }}]"
                                 {{ $todo->complete?'checked':'' }} value="1" id="flexCheckDefault"></th>
                         @if ($todo->complete)
+                        <td><del>{{ $todo->user->name }}</del></td>
                         <td><del>{{ $todo->date }}</del></td>
                         <td><del>{{ $todo->name }}</del></td>
                         <td><del>{{ $todo->details }}</del></td>
                         @else
                         <td>{{ $todo->date }}</td>
+                        <td>{{ $todo->user->name }}</td>
                         <td>{{ $todo->name }}</td>
                         <td>{{ $todo->details }}</td>
                         @endif
@@ -113,8 +117,11 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Close</button>
-                                                <a href="/delete/{{ $todo->id }}" type="submit"
-                                                    class="btn btn-primary">Delete</a>
+                                                <form action="/delete/{{ $todo->id }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-primary">Delete</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +137,8 @@
                     Save
                 </button>
             </div>
-        </form>
+            {{--
+        </form> --}}
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">

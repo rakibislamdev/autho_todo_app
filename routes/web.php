@@ -27,13 +27,13 @@ Route::middleware([
 Route::prefix('/')->middleware(['auth'])->group(function () {
     Route::get('/', [TodoController::class, 'index']);
 
-    Route::get('/store', [TodoController::class, 'store']);
+    Route::post('/store', [TodoController::class, 'store']);
 
     Route::get('/edit/{todo}', [TodoController::class, 'edit']);
 
-    Route::get('/update/{todo}', [TodoController::class, 'update']);
+    Route::put('/update/{todo}', [TodoController::class, 'update']);
 
-    Route::get('/delete/{todo}', [TodoController::class, 'destroy']);
+    Route::delete('/delete/{todo}', [TodoController::class, 'destroy']);
 
     Route::get('/status', [TodoController::class, 'status']);
 });

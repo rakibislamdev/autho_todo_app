@@ -12,7 +12,10 @@
 <body>
     <!-- form section-->
     <section class="m-5 d-flex justify-content-center">
-        <form action="/update/{{$todo->id }}" style="width: 500px" class="bg-light p-4 shadow mb-5 bg-body rounded">
+        <form action="/update/{{$todo->id }}" method="POST" style="width: 500px"
+            class="bg-light p-4 shadow mb-5 bg-body rounded">
+            @csrf
+            @method('PUT')
             <div class="text-center">
                 <h3>Todo List</h3>
             </div>
